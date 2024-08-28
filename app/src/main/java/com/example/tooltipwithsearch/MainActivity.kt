@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             Item("Item 1", "Info about Item 1"),
             Item("Item 2", "Info about Item 2"),
             Item("Item 3", "Info about Item 3"),
-            Item("Item 1", "Info about Item 4"),
+            Item("Item 1", "Info about Item 5"),
 
         )
 
