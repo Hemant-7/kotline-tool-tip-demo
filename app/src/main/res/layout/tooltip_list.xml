@@ -15,7 +15,7 @@
         android:hint="Search"
         android:padding="8dp" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

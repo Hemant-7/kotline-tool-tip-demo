@@ -6,6 +6,7 @@ import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tooltipwithsearch.R
 import com.skydoves.balloon.Balloon
 
@@ -17,7 +18,7 @@ class TooltipItemAdapter(
     private val originalItems: List<ListItem>,
     private val onItemSelected: (ListItem) -> Unit,
     private val dismissTooltip: () -> Unit
-) : BaseAdapter() {
+) : RecyclerView.Adapter<TooltipItemAdapter.ViewHolder>() {
 
     fun filter(query: String) {
         items = if (query.isEmpty()) {
@@ -28,23 +29,12 @@ class TooltipItemAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getCount(): Int = items.size
-    override fun getItem(position: Int): Any = items[position]
-    override fun getItemId(position: Int): Long = position.toLong()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.tooltip_list_item, parent, false)
+        return ViewHolder(view)
+    }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View
-        val holder: ViewHolder
-
-        if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.tooltip_list_item, parent, false)
-            holder = ViewHolder(view)
-            view.tag = holder
-        } else {
-            view = convertView
-            holder = view.tag as ViewHolder
-        }
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.itemName.text = item.name
 
@@ -65,11 +55,11 @@ class TooltipItemAdapter(
             onItemSelected(item)
             dismissTooltip()
         }
-
-        return view
     }
 
-    private class ViewHolder(view: View) {
+    override fun getItemCount(): Int = items.size
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val container: LinearLayout = view.findViewById(R.id.container)
         val itemName: TextView = view.findViewById(R.id.itemName)
     }

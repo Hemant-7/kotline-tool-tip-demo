@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tooltipwithsearch.R
 import com.skydoves.balloon.ArrowOrientation
@@ -51,33 +52,9 @@ class ItemAdapter(private val context: Context, private val items: List<Item>) :
                 ListItem("Item 9", false),
                 ListItem("Item 10", false),
                 ListItem("Item 11", false),
-                ListItem("Item 4", false),
-                ListItem("Item 5", false),
-                ListItem("Item 6", false),
-                ListItem("Item 7", false),
-                ListItem("Item 8", false),
-                ListItem("Item 9", false),
-                ListItem("Item 10", false),
-                ListItem("Item 11", false),
-                ListItem("Item 4", false),
-                ListItem("Item 5", false),
-                ListItem("Item 6", false),
-                ListItem("Item 7", false),
-                ListItem("Item 8", false),
-                ListItem("Item 9", false),
-                ListItem("Item 10", false),
-                ListItem("Item 11", false),
-                ListItem("Item 4", false),
-                ListItem("Item 5", false),
-                ListItem("Item 6", false),
-                ListItem("Item 7", false),
-                ListItem("Item 8", false),
-                ListItem("Item 9", false),
-                ListItem("Item 10", false),
-                ListItem("Item 11", false),
-
                 ListItem("Item 12", false)
             )
+
             tooltip = createItemTooltip(context, listItems, {
                 // Handle item selection here if needed
             }, {
@@ -97,19 +74,21 @@ class ItemAdapter(private val context: Context, private val items: List<Item>) :
     ): Balloon {
         val customView: View = LayoutInflater.from(context).inflate(R.layout.tooltip_list, null)
         val searchEditText: EditText = customView.findViewById(R.id.searchEditText)
-        val listView: ListView = customView.findViewById(R.id.itemListView)
+        val recyclerView: RecyclerView = customView.findViewById(R.id.itemListView)
 
+        // Set up the RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = TooltipItemAdapter(context, items, items, onItemSelected, dismissTooltip)
-        listView.adapter = adapter
+        recyclerView.adapter = adapter
 
         // Add a text watcher to the search EditText to filter the list based on user input
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-
+                // No action needed here
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+                // No action needed here
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
